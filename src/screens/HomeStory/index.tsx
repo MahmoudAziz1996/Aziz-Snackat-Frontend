@@ -18,10 +18,12 @@ const HomeScreen = () => {
   const {isLoading, productList, refetch, isFetching} = useProducts();
 
   const keyExtractor = useCallback((item: IProduct) => item.id.toString(), []);
-  const listDivider = () => <ListSeparator />;
-  const renderItem: ListRenderItem<IProduct> = ({item}) => (
-    <ProductRow product={item} key={item?.id} />
+  const renderItem: ListRenderItem<IProduct> = useCallback(
+    ({item}) => <ProductRow product={item} key={item?.id} />,
+    [],
   );
+  const listDivider = () => <ListSeparator />;
+
   return (
     <View style={styles.container}>
       {isLoading && <Loading size="large" />}
@@ -31,6 +33,9 @@ const HomeScreen = () => {
         data={productList?.data}
         renderItem={renderItem}
         numColumns={2}
+        removeClippedSubviews={true}
+        initialNumToRender={6}
+        maxToRenderPerBatch={6}
         columnWrapperStyle={styles.columnWrapper}
         ItemSeparatorComponent={listDivider}
         refreshControl={
