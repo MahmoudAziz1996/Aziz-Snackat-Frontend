@@ -24,7 +24,7 @@ const EmptyView = () => {
   );
 };
 
-export default EmptyView;
+export {EmptyView};
 
 const styles = StyleSheet.create({
   container: {
