@@ -1,7 +1,7 @@
-import {SafeAreaView} from 'react-native';
 import React from 'react';
+import {SafeAreaView} from 'react-native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import CartScreen from './src/screens/CartStory';
+import RootNavigation from './src/routes';
 
 const queryClient = new QueryClient();
 
@@ -9,7 +9,7 @@ const App = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <QueryClientProvider client={queryClient}>
-        <CartScreen />
+        <RootNavigation />
       </QueryClientProvider>
     </SafeAreaView>
   );

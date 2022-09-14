@@ -3,10 +3,17 @@ import React from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {colors} from '../../../assets/theme';
 import {AppIcon, Label} from '../../../components';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {MainStackParamList} from '../../../routes/types/params';
 
 const CartHeader = () => {
+  const {navigate} =
+    useNavigation<NativeStackNavigationProp<MainStackParamList>>();
+  const goToCart = () => navigate('Cart');
+
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity onPress={goToCart}>
       <AppIcon type="AntDesign" name="shoppingcart" size={30} />
       <View style={styles.counter}>
         <Label style={styles.title}>{0}</Label>
