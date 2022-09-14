@@ -1,13 +1,17 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {assets} from '../../../assets';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {colors} from '../../../assets/theme';
 import Icon from 'react-native-vector-icons/Entypo';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {MainStackParamList} from '../../../routes/types/params';
 
 const EmptyView = () => {
-  const goBack = () => {};
+  const {goBack} =
+    useNavigation<NativeStackNavigationProp<MainStackParamList>>();
 
   return (
     <View style={styles.container}>

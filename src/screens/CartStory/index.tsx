@@ -1,6 +1,5 @@
 import {Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {useSelector} from 'react-redux';
 import {colors} from '../../assets/theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {EmptyView} from './components';

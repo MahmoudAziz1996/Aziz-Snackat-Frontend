@@ -1,15 +1,30 @@
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {colors} from '../../../assets/theme';
 import FastImage from 'react-native-fast-image';
 import {IProduct} from '../../../lib/@types/Products';
 import {AppImage, Button, Label} from '../../../components';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {MainStackParamList} from '../../../routes/types/params';
 
 interface Props {
   product: IProduct;
 }
 const ProductRow = ({product}: Props) => {
+  const {navigate} =
+    useNavigation<NativeStackNavigationProp<MainStackParamList>>();
+  const handleSuccess = () => {
+    Alert.alert('Item Added to cart', '', [
+      {
+        text: 'Continue browsing',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {text: 'Go to the cart', onPress: () => navigate('Cart')},
+    ]);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.category}>
@@ -36,7 +51,7 @@ const ProductRow = ({product}: Props) => {
           style={styles.button}
           type={'dark'}
           radius="small"
-          onPress={() => {}}>
+          onPress={handleSuccess}>
           <Label style={styles.buttonText}>Add to cart</Label>
         </Button>
       </View>
