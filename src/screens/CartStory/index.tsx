@@ -1,38 +1,52 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {AppIcon, Label} from '../../components';
+import {useSelector} from 'react-redux';
 import {colors} from '../../assets/theme';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {EmptyView} from './components';
+import {IProduct} from '../../lib/@types/Products';
+import CartItem from './components/CartItem';
 
-const CartHeader = () => {
+const Cart = () => {
+  const cartItems: IProduct[] = [];
+  const renderCartItems = () =>
+    cartItems?.map(item => {
+      return <CartItem product={item} key={item.id} />;
+    });
   return (
-    <TouchableOpacity onPress={() => {}}>
-      <AppIcon type="AntDesign" name="shoppingcart" size={30} />
-      <View style={styles.counter}>
-        <Label style={styles.title}>0</Label>
+    <View style={styles.container}>
+      {cartItems?.length === 0 && <EmptyView />}
+      <ScrollView>{renderCartItems()}</ScrollView>
+      <View style={styles.footer}>
+        <Text style={styles.text}>Total Count: x{`(${23})`} </Text>
+        <Text style={styles.text}>Total Amount: {43555} USD</Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
-export default CartHeader;
-
+export default Cart;
 const styles = StyleSheet.create({
-  counter: {
-    position: 'absolute',
-    minWidth: 25,
-    minHeight: 20,
-    left: -15,
-    top: -6,
-    borderRadius: wp(50),
-    backgroundColor: colors.transparentBlack2,
-    padding: 4,
-    justifyContent: 'center',
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
   },
-  title: {
-    fontSize: wp(3),
-    textAlign: 'center',
-    color: colors.white,
-    fontWeight: '800',
+  footer: {
+    height: wp(15),
+    padding: 8,
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    shadowOffset: {width: 0, height: 0},
+    shadowColor: colors.black,
+    shadowRadius: 20,
+    shadowOpacity: 0.1,
+    elevation: 1,
+    borderTopWidth: Platform.OS == 'ios' ? 0 : 1.5,
+    borderColor: colors.lightGrey,
+  },
+  text: {
+    fontSize: wp(4),
+    fontWeight: '600',
+    color: colors.black,
   },
 });
