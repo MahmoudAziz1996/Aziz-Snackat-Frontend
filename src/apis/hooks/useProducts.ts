@@ -6,11 +6,15 @@ export const useProducts = () => {
     isLoading,
     data: productList,
     error,
+    refetch,
+    isFetching,
   } = useQuery([listProductApi.key], listProductApi.expect, {});
 
   return {
     isLoading,
     productList,
     error,
+    isFetching,
+    refetch,
   };
 };

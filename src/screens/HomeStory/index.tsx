@@ -1,4 +1,10 @@
-import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  ListRenderItem,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from 'react-native';
 import React, {useCallback} from 'react';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {colors} from '../../assets/theme';
@@ -9,7 +15,7 @@ import ProductRow from './component/ProductRow';
 import ListSeparator from './component/ListSeparator';
 
 const HomeScreen = () => {
-  const {isLoading, productList} = useProducts();
+  const {isLoading, productList, refetch, isFetching} = useProducts();
 
   const keyExtractor = useCallback((item: IProduct) => item.id.toString(), []);
   const listDivider = () => <ListSeparator />;
@@ -27,6 +33,9 @@ const HomeScreen = () => {
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
         ItemSeparatorComponent={listDivider}
+        refreshControl={
+          <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+        }
       />
     </View>
   );
