@@ -6,16 +6,20 @@ import FastImage from 'react-native-fast-image';
 import {IProduct} from '../../../lib/@types/Products';
 import {AppImage, Button, Label} from '../../../components';
 import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {NativeStackNavigationProp as NavigationProps} from '@react-navigation/native-stack';
 import {MainStackParamList} from '../../../routes/types/params';
+import {addToCart} from '../../../redux/cartSlice';
+import {useDispatch} from 'react-redux';
 
 interface Props {
   product: IProduct;
 }
 const ProductRow = ({product}: Props) => {
-  const {navigate} =
-    useNavigation<NativeStackNavigationProp<MainStackParamList>>();
+  const {navigate} = useNavigation<NavigationProps<MainStackParamList>>();
+
+  const dispatch = useDispatch();
   const handleSuccess = () => {
+    dispatch(addToCart(product));
     Alert.alert('Item Added to cart', '', [
       {
         text: 'Continue browsing',
@@ -46,7 +50,7 @@ const ProductRow = ({product}: Props) => {
         <Label style={styles.title}>USD {product.price}</Label>
         <Label style={styles.title}>{`${product.rating.rate}/5`}</Label>
       </View>
-      <View>
+      <View style={styles.footer}>
         <Button
           style={styles.button}
           type={'dark'}
@@ -95,8 +99,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   footer: {
-    marginVertical: 8,
-    alignSelf: 'flex-end',
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   button: {
     backgroundColor: colors.black,
@@ -104,7 +108,6 @@ const styles = StyleSheet.create({
     height: 30,
     paddingVertical: 7,
     alignSelf: 'flex-end',
-    marginTop: wp(2),
   },
   buttonText: {
     color: colors.white,
