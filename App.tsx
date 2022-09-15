@@ -3,7 +3,8 @@ import {SafeAreaView} from 'react-native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import RootNavigation from './src/routes';
 import {Provider} from 'react-redux';
-import store from './src/redux/store';
+import {store, persistor} from './src/redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,9 @@ const App = () => {
     <SafeAreaView style={{flex: 1}}>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <RootNavigation />
+          <PersistGate loading={null} persistor={persistor}>
+            <RootNavigation />
+          </PersistGate>
         </QueryClientProvider>
       </Provider>
     </SafeAreaView>
