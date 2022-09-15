@@ -7,14 +7,22 @@ import DeleteButton from './DeleteButton';
 import {IProduct} from '../../../lib/@types/Products';
 import {AppImage, Label} from '../../../components';
 import {CounterButton} from './CounterButton';
+import {useDispatch} from 'react-redux';
+import {
+  addToCart,
+  removeFromCart,
+  removeProduct,
+} from '../../../redux/cartSlice';
 
 interface Props {
   product: IProduct;
 }
 const CartItem = ({product}: Props) => {
-  const handleIncrement = () => {};
-  const handleDecrement = () => {};
-  const handleDeletion = () => {};
+  const dispatch = useDispatch();
+  const handleIncrement = () => dispatch(addToCart(product));
+  const handleDecrement = () => dispatch(removeFromCart(product));
+  const handleDeletion = () => dispatch(removeProduct(product.id));
+
   return (
     <View style={styles.container}>
       <AppImage

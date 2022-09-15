@@ -3,11 +3,17 @@ import React from 'react';
 import {colors} from '../../assets/theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {EmptyView} from './components';
-import {IProduct} from '../../lib/@types/Products';
 import CartItem from './components/CartItem';
+import {useSelector} from 'react-redux';
+import {IRootState} from '../../redux/types';
 
 const Cart = () => {
-  const cartItems: IProduct[] = [];
+  const {
+    totalCount,
+    items: cartItems,
+    totalAmount,
+  } = useSelector((state: IRootState) => state.cart);
+
   const renderCartItems = () =>
     cartItems?.map(item => {
       return <CartItem product={item} key={item.id} />;
@@ -17,8 +23,8 @@ const Cart = () => {
       {cartItems?.length === 0 && <EmptyView />}
       <ScrollView>{renderCartItems()}</ScrollView>
       <View style={styles.footer}>
-        <Text style={styles.text}>Total Count: x{`(${23})`} </Text>
-        <Text style={styles.text}>Total Amount: {43555} USD</Text>
+        <Text style={styles.text}>Total Count: x{`(${totalCount})`} </Text>
+        <Text style={styles.text}>Total Amount: {totalAmount} USD</Text>
       </View>
     </View>
   );

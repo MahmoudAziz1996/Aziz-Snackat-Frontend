@@ -4,19 +4,21 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {colors} from '../../../assets/theme';
 import {AppIcon, Label} from '../../../components';
 import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {NativeStackNavigationProp as NavigationProps} from '@react-navigation/native-stack';
 import {MainStackParamList} from '../../../routes/types/params';
+import {useSelector} from 'react-redux';
+import {IRootState} from '../../../redux/types';
 
 const CartHeader = () => {
-  const {navigate} =
-    useNavigation<NativeStackNavigationProp<MainStackParamList>>();
+  const {navigate} = useNavigation<NavigationProps<MainStackParamList>>();
   const goToCart = () => navigate('Cart');
+  const totalCount = useSelector((state: IRootState) => state.cart.totalCount);
 
   return (
     <TouchableOpacity onPress={goToCart}>
       <AppIcon type="AntDesign" name="shoppingcart" size={30} />
       <View style={styles.counter}>
-        <Label style={styles.title}>{0}</Label>
+        <Label style={styles.title}>{totalCount}</Label>
       </View>
     </TouchableOpacity>
   );
